@@ -2,7 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const dotenv = require("dotenv");
 const fs = require("fs");
-const azureVision = require("@azure-rest/ai-vision-image-analysis"); // CommonJS import
+const azureVision = require("@azure-rest/ai-vision-image-analysis");
 const { AzureKeyCredential } = require("@azure/core-auth");
 
 dotenv.config();

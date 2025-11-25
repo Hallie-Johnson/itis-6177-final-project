@@ -263,5 +263,5 @@ Follow the tutorial GIF below or use the steps provided.
 
 ## Links
 - [Azure AI Image Analysis](https://azure.microsoft.com/en-us/products/ai-services/ai-vision/)
-- [Azure AI Vision Image Analysis Documentation](#https://learn.microsoft.com/en-us/javascript/api/overview/azure/ai-vision-image-analysis-rest-readme?view=azure-node-preview)
+- [Azure AI Vision Image Analysis Documentation](https://learn.microsoft.com/en-us/javascript/api/overview/azure/ai-vision-image-analysis-rest-readme?view=azure-node-preview)
 - [Postman](https://www.postman.com/)

@@ -11,6 +11,13 @@ dotenv.config();
 const app = express();
 const upload = multer();
 
+app.use(express.static("public"));
+
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/public/index.html");
+});
+
+
 let client;
 
 if (typeof azureVision.ImageAnalysisClient === "function") {

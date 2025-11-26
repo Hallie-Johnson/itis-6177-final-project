@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Azure AI Image Analysis Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="sidebar">
+        <h2>TABLE OF CONTENTS</h2>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#use-cases">Use Cases</a></li>
+            <li><a href="#architecture-diagram">Architecture Diagram</a></li>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#getting-started">Getting Started</a></li>
+            <li><a href="#analyze">/Analyze Endpoint</a></li>
+            <li><a href="#analyze-image">/Analyze-Image Endpoint</a></li>
+            <li><a href="#api-endpoints">API Endpoints</a></li>
+            <li><a href="#results-breakdown">Results Breakdown</a></li>
+            <li><a href="#bounding-boxes">Bounding Boxes</a></li>
+            <li><a href="#common-errors">Common Errors</a></li>
+            <li><a href="#links">Links</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h1>Azure AI Image Analysis API Documentation</h1>
+        <p><strong>Hallie Johnson - ITIS 6177</strong></p>
+        <p>GitHub Repository: <a href="https://github.com/Hallie-Johnson/itis-6177-final-project">https://github.com/Hallie-Johnson/itis-6177-final-project</a></p>
+        <p>API Endpoints:</p>
+        <ul>
+            <li>http://161.35.181.15:3000/analyze</li>
+            <li>http://161.35.181.15:3000/analyze-image</li>
+        </ul>
+        <hr />
+
+        <h2 id="overview">OVERVIEW</h2>
+        <p>The Image Analysis API allows users to send images to Azure AI Image Analysis and receive:</p>
+        <ul>
+            <li>Captions describing the image</li>
+            <li>Sub-captions for individual sections of the image</li>
+            <li>Bounding boxes for objects, people, and sub-captions</li>
+            <li>Tags identifying objects, scenery, and humans</li>
+            <li>Confidence scores for predictions</li>
+        </ul>
+        <p>The API provides two endpoints:</p>
+        <ol>
+            <li><b>/analyze</b> - returns JSON metadata and analysis results</li>
+            <li><b>/analyze-image</b> - returns the original image with bounding boxes drawn and labeled</li>
+        </ol>
+
+
+
+
+
+
+        <h2 id="use-cases">USE CASES</h2>
+        <p>This API provides automated image analysis for applications like:</p>
+        <ul>
+            <li>Content moderation</li>
+            <li>Accessibility (alt-text)</li>
+            <li>Object detection for security</li>
+            <li>Data tagging for image datasets</li>
+            <li>Visual insights for marketing and media analysis</li>
+        </ul>
+
+
+
+
+
+
+        <h2 id="architecture-diagram">ARCHITECTURE DIAGRAM</h2>
+        <p>Below is a diagram showing how the API works:</p>
+        <img src="images/diagram.png" alt="Architecture diagram" />
+
+
+
+
+
+
+        <h2 id="prerequisites">PREREQUISITES</h2>
+        <h3>Install Postman</h3>
+        <ul>
+            <li><a href="https://www.postman.com/">Download Postman</a></li>
+            <li>Create a Postman account</li>
+        </ul>
+
+        <h3>Image Types</h3>
+        <table>
+            <tr><th>Acceptable</th><th>Unsupported</th></tr>
+            <tr><td>JPG (.jpg, .jpeg)</td><td>SVG (.svg)</td></tr>
+            <tr><td>PNG (.png)</td><td>PDF (.pdf)</td></tr>
+            <tr><td>GIF (.gif)</td><td>Raw Camera Files (.cr2, .nef, .arw, etc.)</td></tr>
+            <tr><td> </td><td>PSD (Photoshop) (.psd)</td></tr>
+            <tr><td> </td><td>HEIC/HEIF (iPhone) (.heic, .heif)</td></tr>
+            <tr><td> </td><td>BMP (.bmp)</td></tr>
+            <tr><td> </td><td>ICO (.ico)</td></tr>
+        </table>
+
+        <table>
+            <tr><th>Max Size</th><th>Dimensions</th><th>Image Count</th></tr>
+            <tr><td>20MB</td><td>50×50 to 16000×16000</td><td>Only 1 image per request</td></tr>
+        </table>
+
+
+
+
+
+
+        <h2 id="getting-started">GETTING STARTED</h2>
+        <p>Follow the tutorial GIF below or use the steps provided.</p>
+
+        <img src="images/tutorial.gif" alt="alt text" />
+
+        <h3>Step-by-Step Instructions</h3>
+
+        <h4>1. Change <em>GET</em> to <em>POST</em> using the dropdown. Type the URL: http://161.35.181.15:3000/analyze into the <em>Enter URL or paste text</em> field.</h4>
+        <img src="images/step5.png" alt="alt text" />
+        <br><br>
+
+        <h4>2. Select <em>Body</em> and select <em>form-data</em>.</h4>
+        <img src="images/step6.png" alt="alt text" />
+        <br><br>
+
+        <h4>3. Under the <em>Key</em> parameter, type <em>image</em> and select <em>File</em> in the type dropdown.</h4>
+        <img src="images/step7.png" alt="alt text" />
+        <br><br>
+
+        <h4>4. Under the <em>Value</em> parameter, click on <em>Select Files</em>. Click on <em>New file from local machine</em> and select an image on your system.</h4>
+        <img src="images/step8.png" alt="alt text" />
+        <br><br>
+
+        <h4>5. Verify the following has been inputted. Click <em>Send</em> to send the image to the API.</h4>
+
+        <table>
+            <tr><th>Field</th><th>Value</th></tr>
+            <tr><td>Method</td><td>POST</td></tr>
+            <tr><td>URL</td><td>http://161.35.181.15:3000/analyze</td></tr>
+            <tr><td></td><td>Body</td></tr>
+            <tr><td></td><td>form-data</td></tr>
+            <tr><td>Key</td><td>image</td></tr>
+            <tr><td></td><td>File</td></tr>
+            <tr><td>Value</td><td>[Your image file]</td></tr>
+            <tr><td>Description</td><td></td></tr>
+        </table>
+
+        <img src="images/step9.png" alt="alt text" />
+        <br><br>
+
+        <h4>6. The response returns a <em>200 OK</em> and returns image information based on the image you uploaded.</h4>
+        <img src="images/step10.png" alt="alt text" />
+        <br><br><br><br>
+
+
+
+
+
+
+        <h2 id="analyze">/analyze ENDPOINT</h2>
+        <p>Follow the tutorial GIF below or use the steps provided.</p>
+
+        <img src="images/tutorial2.gif" alt="alt text" />
+        <br><br>
+
+        <h3>Step-by-Step Instructions</h3>
+
+        <h4>1. Change <em>GET</em> to <em>POST</em> using the dropdown. Type the URL: http://161.35.181.15:3000/analyze-image into the <em>Enter URL or paste text</em> field.</h4>
+        <img src="images/stepA.png" alt="alt text" />
+        <br><br>
+
+        <h4>2. Select <em>Body</em> and select <em>form-data</em>.</h4>
+        <img src="images/stepB.png" alt="alt text" />
+        <br><br>
+
+        <h4>3. Under the <em>Key</em> parameter, type <em>image</em> and select <em>File</em> in the type dropdown.</h4>
+        <img src="images/step7.png" alt="alt text" />
+        <br><br>
+
+        <h4>4. Under the <em>Value</em> parameter, click on <em>Select Files</em>. Click on <em>New file from local machine</em> and select an image on your system.</h4>
+        <img src="images/step8.png" alt="alt text" />
+        <br><br>
+
+        <h4>5. Verify the following has been inputted. Click <em>Send</em> to send the image to the API.</h4>
+
+        <table>
+            <tr><th>Field</th><th>Value</th></tr>
+            <tr><td>Method</td><td>POST</td></tr>
+            <tr><td>URL</td><td>http://161.35.181.15:3000/analyze-image</td></tr>
+            <tr><td></td><td>Body</td></tr>
+            <tr><td></td><td>form-data</td></tr>
+            <tr><td>Key</td><td>image</td></tr>
+            <tr><td></td><td>File</td></tr>
+            <tr><td>Value</td><td>[Your image file]</td></tr>
+            <tr><td>Description</td><td></td></tr>
+        </table>
+
+        <img src="images/stepC.png" alt="alt text" />
+        <br><br>
+
+        <h4>6. The response returns your a <em>200 OK</em> status and the image you uploaded with bounding boxes and labels.</h4>
+        <img src="images/stepD.png" alt="alt text" />
+        <br><br><br><br>
+
+
+
+
+
+
+        <h2 id="api-endpoints">API ENDPOINTS</h2>
+        <p>POST /analyze and POST /analyze-image</p>
+
+        <h3>POST <code>/analyze</code></h3>
+        <p><strong>Description</strong>: Returns JSON metadata about the image, including captions, tags, and detected objects.</p>
+
+        <p><strong>Request</strong>:</p>
+        <ul>
+            <li>Method: POST</li>
+            <li>URL: http://161.35.181.15:3000/analyze</li>
+            <li>Body: <code>form-data</code></li>
+            <li>Key: <code>image</code></li>
+            <li>Type: <code>File</code></li>
+            <li>Value: Your image file</li>
+        </ul>
+
+        <p><strong>Response</strong>:</p>
+        <pre><code>{
+            "modelVersion": "2023-10-01",
+            "captionResult": { "text": "A crown with sunglasses", "confidence": 0.84 },
+            "denseCaptionsResult": {
+                "values": [
+                    { 
+                        "text": "A crown", 
+                        "confidence": 0.84, 
+                        "boundingBox": { 
+                            "x": 804, 
+                            "y": 46, 
+                            "w": 305, 
+                            "h": 262 
+                        } 
+                    }
+                ]
+            },
+            "metadata": { 
+                "width": 1920, 
+                "height": 363 
+            },
+            "tagsResult": { 
+                "values": [ 
+                    { 
+                        "name": "silhouette", 
+                        "confidence": 0.78 
+                    } 
+                ]
+            },
+            "objectsResult": { 
+                "values": [] 
+            },
+            "peopleResult": { 
+                "values": [] 
+            }
+        }
+        </code></pre>
+
+        <h3>POST <code>/analyze-image</code></h3>
+        <p><strong>Description</strong>: Returns the original image with bounding boxes drawn around objects, dense captions, and detected people.</p>
+
+        <p><strong>Request</strong>:</p>
+        <ul>
+            <li>Method: POST</li>
+            <li>URL: http://161.35.181.15:3000/analyze-image</li>
+            <li>Body: <code>form-data</code></li>
+            <li>Key: <code>image</code></li>
+            <li>Type: <code>File</code></li>
+            <li>Value: Your image file</li>
+        </ul>
+
+        <p><strong>Response</strong>:</p>
+        <ul>
+            <li>Content-Type: <code>image/png</code></li>
+            <li>The image will have red rectangles and labels over detected regions.</li>
+            <li>If no bounding boxes are detected, the original image is returned.</li>
+        </ul>
+
+        <br><br>
+
+
+
+
+
+        <h2 id="results-breakdown">RESULTS BREAKDOWN</h2>
+        <table>
+            <tr><th>Feature</th><th>Description</th></tr>
+            <tr><td>Caption</td><td>Primary caption for the image</td></tr>
+            <tr><td>Dense Captions</td><td>Region-based sub-captions with bounding boxes</td></tr>
+            <tr><td>Objects</td><td>Detected objects with location</td></tr>
+            <tr><td>People</td><td>Bounding boxes around humans</td></tr>
+            <tr><td>Tags</td><td>Labels identifying objects, scenery, etc.</td></tr>
+            <tr><td>Metadata</td><td>Width and height of the image</td></tr>
+            <tr><td>Confidence</td><td>AI's confidence for each prediction</td></tr>
+            <tr><td>Smart Crops</td><td>Suggested crops for highlighting regions</td></tr>
+        </table>
+
+
+
+
+
+
+        <h2 id="bounding-boxes">BOUNDING BOXES</h2>
+        <ul>
+            <li>Bounding boxes are objects with coordinates:</li>
+            <ul>
+                <li>x, y - top-left corner</li>
+                <li>w, h - width and height</li>
+            </ul>
+            <li>Drawn as red rectangles with labels</li>
+        </ul>
+
+
+
+
+
+
+        <h2 id="common-errors">COMMON ERRORS</h2>
+        <h3>No Image Uploaded</h3>
+        <img src="images/error1.png" alt="alt text" />
+        <p><strong>Cause</strong>: Image file missing in request.</p>
+        <p><strong>Solution</strong>: Upload image and/or verify form-data is correct.</p>
+
+        <br><br>
+
+        <h3>Bounding Box Drawing Failed - Input Buffer Contains Unsupported Image Format</h3>
+        <img src="images/error2.png" alt="alt text" />
+        <p><strong>Cause</strong>: Image file is an unsupported file.</p>
+        <p><strong>Solution</strong>: Upload image with acceptable file format.</p>
+
+        <br><br>
+
+        <h3>Error: read ECONNRESET - Could not get response</h3>
+        <img src="images/error3.png" alt="alt text" />
+        <p><strong>Cause</strong>: Image file is too large or too small or connection issues.</p>
+        <p><strong>Solution</strong>: Upload image with acceptable resolution and/or file size or check internet connection.</p>
+
+        <br><br><br>
+
+        <h2 id="links">LINKS</h2>
+        <ul>
+            <li><a href="https://azure.microsoft.com/en-us/products/ai-services/ai-vision/">Azure AI Image Analysis</a></li>
+            <li><a href="https://learn.microsoft.com/en-us/javascript/api/overview/azure/ai-vision-image-analysis-rest-readme?view=azure-node-preview">
+                Azure AI Vision Image Analysis Documentation</a></li>
+            <li><a href="https://www.postman.com/">Postman</a></li>
+            <li><a href="https://learning.postman.com/docs/sending-requests/requests/">
+                Postman - Sending Requests Documentation</a></li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -78,7 +78,7 @@ You may upload any standard image file from your computer. Supported and unsuppo
 
 | Max File Size | Recommended Dimensions | Image Count |
 | -------- | ------- | ------- |
-| 20 MB | 50x50 px - 16,000x16,000 | Only 1 image per request |
+| 20 MB | 50x50 px to 16,000x16,000 | Only 1 image per request |
 <br> </br>
 <br> </br>
 

@@ -18,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 
+// Connect to Azure
 let client;
 
 if (typeof azureVision.ImageAnalysisClient === "function") {
@@ -34,10 +35,25 @@ if (typeof azureVision.ImageAnalysisClient === "function") {
     throw new Error("Cannot initialize Azure Image Analysis client");
 }
 
+// Helper function to validate image dimensions
+async function validateImageDimensions(buffer) {
+    const metadata = await sharp(buffer).metadata();
+    if (metadata.width < 50 || metadata.height < 50) {
+        throw new Error("Image too small. Minimum size is 50px.");
+    }
+    if (metadata.width > 16000 || metadata.height > 16000) {
+        throw new Error("Image too large. Maximum size is 16,000px.");
+    }
+    return metadata;
+}
+
 // Get image captions and details
 app.post("/analyze", upload.single("image"), async (req, res) => {
     try {
         if (!req.file) return res.status(400).json({ error: "No image uploaded" });
+
+        // Check dimensions
+        await validateImageDimensions(req.file.buffer);
 
         const features = [
             "Caption",
@@ -59,7 +75,7 @@ app.post("/analyze", upload.single("image"), async (req, res) => {
 
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Azure request failed", details: err.message });
+        res.status(400).json({ error: err.message });
     }
 });
 
@@ -68,7 +84,9 @@ app.post("/analyze-image", upload.single("image"), async (req, res) => {
     try {
         if (!req.file) return res.status(400).json({ error: "No image uploaded" });
 
-        //Get all bounding boxes from Json
+        // Validate dimensions
+        const meta = await validateImageDimensions(req.file.buffer);
+
         const features = ["Objects", "DenseCaptions", "People"];
 
         const result = await client.path("/imageanalysis:analyze").post({
@@ -77,45 +95,25 @@ app.post("/analyze-image", upload.single("image"), async (req, res) => {
             contentType: "application/octet-stream",
         });
 
-        const img = sharp(req.file.buffer);
-        const meta = await img.metadata();
-
-        // Collect all bounding boxes
+        // Collect bounding boxes...
         const boxes = [];
-
-        // Objects
         if (result.body.objects?.values?.length) {
             for (const obj of result.body.objects.values) {
                 if (obj.boundingBox) {
-                    boxes.push({
-                        ...obj.boundingBox,
-                        label: obj.tags?.[0]?.name || "Object",
-                    });
+                    boxes.push({ ...obj.boundingBox, label: obj.tags?.[0]?.name || "Object" });
                 }
             }
         }
 
-        // Dense Captions
         if (result.body.denseCaptionsResult?.values?.length) {
             for (const cap of result.body.denseCaptionsResult.values) {
-                if (cap.boundingBox) {
-                    boxes.push({
-                        ...cap.boundingBox,
-                        label: cap.text,
-                    });
-                }
+                if (cap.boundingBox) boxes.push({ ...cap.boundingBox, label: cap.text });
             }
         }
 
-        // People
         if (result.body.peopleResult?.values?.length) {
             for (const person of result.body.peopleResult.values) {
-                if (person.boundingBox) {
-                    boxes.push({
-                        ...person.boundingBox,
-                        label: "Person",
-                    });
-                }
+                if (person.boundingBox) boxes.push({ ...person.boundingBox, label: "Person" });
             }
         }
 
@@ -145,9 +143,10 @@ app.post("/analyze-image", upload.single("image"), async (req, res) => {
 
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Bounding box drawing failed", details: err.message });
+        res.status(400).json({ error: err.message });
     }
 });
+
 
 
 const PORT = process.env.PORT || 3000;

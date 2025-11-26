@@ -314,12 +314,13 @@ Follow the tutorial GIF below or use the steps provided.
 
 <br> </br>
 
-### Error: read ECONNRESET - Could not get response
+### Input image exceeds pixel limit / Image too small. Minimum size is 50px.
 ![alt text](images/error3.png)
+![alt text](images/error4.png)
 
-**Cause**: Image file is too large or too small or connection issues.
+**Cause**: Image file is too large or too small.
 
-**Solution**: Upload image with acceptable resolution and/or file size or check internet connection.
+**Solution**: Upload image with an acceptable resolution.
 
 <br> </br>
 <br> </br>

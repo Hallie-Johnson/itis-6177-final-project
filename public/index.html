@@ -113,30 +113,53 @@
 
 
         <h2 id="getting-started">GETTING STARTED</h2>
-        <p>Follow the tutorial GIF below or use the steps provided.</p>
+        <p>Complete the following steps to use the API or use the 
+        <a href="https://learning.postman.com/docs/sending-requests/requests/">Postman Documentation</a> to learn more:</p>
 
-        <img src="images/tutorial.gif" alt="alt text" />
+        <h4>1. Open Postman.</h4>
+        <img src="images/step1.png" alt="Step 1: Open Postman">
+        <br><br>
+
+        <h4>2. Click on <em>Collections</em> in the left-hand sidebar. Click <em>Create Collection</em>.</h4>
+        <img src="images/step2.png" alt="Step 2: Create Collection">
+        <br><br>
+
+        <h4>3. Click <em>Add a request</em>.</h4>
+        <img src="images/step3.png" alt="Step 3: Add a request">
+        <br><br>
+
+        <h4>4. The request now has the fields we need to input our request information.</h4>
+        <img src="images/step4.png" alt="Step 4: Request fields">
+        <br><br><br>
+
+
+
+
+
+        <h2 id="analyze">/analyze ENDPOINT</h2>
+        <p>Follow the tutorial GIF below or use the steps provided.</p>
+        <img src="images/tutorial.gif" alt="Tutorial GIF">
+        <br><br>
 
         <h3>Step-by-Step Instructions</h3>
 
         <h4>1. Change <em>GET</em> to <em>POST</em> using the dropdown. Type the URL: http://161.35.181.15:3000/analyze into the <em>Enter URL or paste text</em> field.</h4>
-        <img src="images/step5.png" alt="alt text" />
+        <img src="images/step5.png" alt="Step 1">
         <br><br>
 
         <h4>2. Select <em>Body</em> and select <em>form-data</em>.</h4>
-        <img src="images/step6.png" alt="alt text" />
+        <img src="images/step6.png" alt="Step 2">
         <br><br>
 
         <h4>3. Under the <em>Key</em> parameter, type <em>image</em> and select <em>File</em> in the type dropdown.</h4>
-        <img src="images/step7.png" alt="alt text" />
+        <img src="images/step7.png" alt="Step 3">
         <br><br>
 
         <h4>4. Under the <em>Value</em> parameter, click on <em>Select Files</em>. Click on <em>New file from local machine</em> and select an image on your system.</h4>
-        <img src="images/step8.png" alt="alt text" />
+        <img src="images/step8.png" alt="Step 4">
         <br><br>
 
         <h4>5. Verify the following has been inputted. Click <em>Send</em> to send the image to the API.</h4>
-
         <table>
             <tr><th>Field</th><th>Value</th></tr>
             <tr><td>Method</td><td>POST</td></tr>
@@ -148,45 +171,41 @@
             <tr><td>Value</td><td>[Your image file]</td></tr>
             <tr><td>Description</td><td></td></tr>
         </table>
-
-        <img src="images/step9.png" alt="alt text" />
+        <img src="images/step9.png" alt="Step 5">
         <br><br>
 
         <h4>6. The response returns a <em>200 OK</em> and returns image information based on the image you uploaded.</h4>
-        <img src="images/step10.png" alt="alt text" />
+        <img src="images/step10.png" alt="Step 6">
         <br><br><br><br>
 
+        
 
 
 
-
-
-        <h2 id="analyze">/analyze-image ENDPOINT</h2>
+        <h2 id="analyze-image">/analyze-image ENDPOINT</h2>
         <p>Follow the tutorial GIF below or use the steps provided.</p>
-
-        <img src="images/tutorial2.gif" alt="alt text" />
+        <img src="images/tutorial2.gif" alt="Tutorial GIF">
         <br><br>
 
         <h3>Step-by-Step Instructions</h3>
 
         <h4>1. Change <em>GET</em> to <em>POST</em> using the dropdown. Type the URL: http://161.35.181.15:3000/analyze-image into the <em>Enter URL or paste text</em> field.</h4>
-        <img src="images/stepA.png" alt="alt text" />
+        <img src="images/stepA.png" alt="Step 1">
         <br><br>
 
         <h4>2. Select <em>Body</em> and select <em>form-data</em>.</h4>
-        <img src="images/stepB.png" alt="alt text" />
+        <img src="images/stepB.png" alt="Step 2">
         <br><br>
 
         <h4>3. Under the <em>Key</em> parameter, type <em>image</em> and select <em>File</em> in the type dropdown.</h4>
-        <img src="images/step7.png" alt="alt text" />
+        <img src="images/step7.png" alt="Step 3">
         <br><br>
 
         <h4>4. Under the <em>Value</em> parameter, click on <em>Select Files</em>. Click on <em>New file from local machine</em> and select an image on your system.</h4>
-        <img src="images/step8.png" alt="alt text" />
+        <img src="images/step8.png" alt="Step 4">
         <br><br>
 
         <h4>5. Verify the following has been inputted. Click <em>Send</em> to send the image to the API.</h4>
-
         <table>
             <tr><th>Field</th><th>Value</th></tr>
             <tr><td>Method</td><td>POST</td></tr>
@@ -198,21 +217,17 @@
             <tr><td>Value</td><td>[Your image file]</td></tr>
             <tr><td>Description</td><td></td></tr>
         </table>
-
-        <img src="images/stepC.png" alt="alt text" />
+        <img src="images/stepC.png" alt="Step 5">
         <br><br>
 
-        <h4>6. The response returns your a <em>200 OK</em> status and the image you uploaded with bounding boxes and labels.</h4>
-        <img src="images/stepD.png" alt="alt text" />
+        <h4>6. The response returns a <em>200 OK</em> status and the image you uploaded with bounding boxes and labels.</h4>
+        <img src="images/stepD.png" alt="Step 6">
         <br><br><br><br>
 
 
 
 
-
-
         <h2 id="api-endpoints">API ENDPOINTS</h2>
-        <p>POST /analyze and POST /analyze-image</p>
 
         <h3>POST <code>/analyze</code></h3>
         <p><strong>Description</strong>: Returns JSON metadata about the image, including captions, tags, and detected objects.</p>
@@ -265,7 +280,8 @@
             }
         }
         </code></pre>
-
+        <br><br>
+        <br><br>
         <h3>POST <code>/analyze-image</code></h3>
         <p><strong>Description</strong>: Returns the original image with bounding boxes drawn around objects, dense captions, and detected people.</p>
 
